@@ -6,7 +6,12 @@ Building a Chatting app with firebase in Flutter.
 
 ### Created By
 
-[Palash Sharma](https://github.com/psPALASH) 
+[Palash Sharma](https://github.com/psPALASH)
+[Nishanth Jain](https://github.com/NishBJain)
+[Neelakshi Punia](https://github.com/neelakshipunia)
+[Nishtha Tripathi](https://github.com/NishthaT)
+[Muskan Mahayash](https://github.com/muskanmahayash)
+
 
 
 ## Getting Started
