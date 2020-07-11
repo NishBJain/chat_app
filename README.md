@@ -1,6 +1,13 @@
-# chat_app
+# Flutter Chatting APP
 
-A new Flutter project.
+Building a Chatting app with firebase in Flutter.
+### Show some :heart: and star the repo to support the project
+
+
+### Created By
+
+[Palash Sharma](https://github.com/psPALASH) 
+
 
 ## Getting Started
 
