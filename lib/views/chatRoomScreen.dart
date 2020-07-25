@@ -5,8 +5,11 @@ import 'package:chat_app/services/auth.dart';
 import 'package:chat_app/services/database.dart';
 import 'package:chat_app/views/conversation_screen.dart';
 import 'package:chat_app/views/search.dart';
+import 'package:chat_app/views/status_screen.dart';
 import 'package:chat_app/widgets/widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'groupCall.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -65,31 +68,101 @@ class _ChatRoomState extends State<ChatRoom> {
         elevation: 0.0,
         centerTitle: false,
         actions: [
-          GestureDetector(
-            onTap: () {
-              authMethods.signOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => Authenticate()));
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context)=><PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: "Call",
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.video_call),
+                    SizedBox(width: 10,),
+                    Text("Group Call"),
+                  ],
+                ),
+              ),
+
+              PopupMenuItem<String>(
+                value: "LogOut",
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.exit_to_app),
+                    SizedBox(width: 10,),
+                    Text("LogOut"),
+                  ],
+                ),
+              ),
+            ],
+            onSelected: (retVal){
+              if(retVal=="Call") {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => IndexPage()));
+              }
+              else if(retVal == "LogOut"){
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => Authenticate()));
+              }
             },
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.blue,
-                )),
-          )
+          ),
+          //GestureDetector(
+            //onTap: () {
+              //authMethods.signOut();
+              //Navigator.pushReplacement(context,
+                //  MaterialPageRoute(builder: (context) => Authenticate()));
+            //},
+            //child: Container(
+              //  padding: EdgeInsets.symmetric(horizontal: 16),
+                //child: Icon(
+                  //Icons.exit_to_app,
+                  //color: Colors.blue,
+                //)),
+          //)
         ],
       ),
-      body: chatRoomList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SearchScreen()));
-        },
-      ),
+        body: chatRoomList(),
+        floatingActionButtonLocation:
+        FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FloatingActionButton(
+                heroTag: 1,
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                },
+                child: Icon(Icons.search),
+              ),
+              FloatingActionButton(
+                heroTag: 2,
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => StatusScreen()));
+                },
+                child: Icon(Icons.play_circle_filled),
+              )
+            ],
+          ),
+        )
+      //floatingActionButton: FloatingActionButton(
+      //children:<Widget> [
+      // FloatingActionButton(
+      //onPressed: () {
+      //Navigator.push(
+      //context, MaterialPageRoute(builder: (context) => SearchScreen()));
+      //},
+      //child:Icon(Icons.search),),
+      // FloatingActionButton(onPressed: (){},
+      // child: Icon(Icons.search),
+      //  )
+      //  ],
+      //),
+
     );
   }
+
 }
 
 class ChatRoomTile extends StatelessWidget {

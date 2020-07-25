@@ -149,6 +149,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         MaterialPageRoute(
           builder: (context) => CallPage(
             channelName: widget.chatRoomId.substring(0,10),
+            role: ClientRole.Broadcaster,
           ),
         ),
       );
