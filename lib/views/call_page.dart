@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/widgets/settings.dart';
+
+import '../widgets/settings.dart';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page
   final String channelName;
+
+  /// non-modifiable client role of the page
   final ClientRole role;
 
   /// Creates a call page with given channel name.
-  const CallPage({Key key, this.channelName,this.role}) : super(key: key);
+  const CallPage({Key key, this.channelName, this.role}) : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -20,7 +23,6 @@ class _CallPageState extends State<CallPage> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  final ClientRole role = ClientRole.Broadcaster;
 
   @override
   void dispose() {
@@ -64,7 +66,7 @@ class _CallPageState extends State<CallPage> {
     await AgoraRtcEngine.create(APP_ID);
     await AgoraRtcEngine.enableVideo();
     await AgoraRtcEngine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await AgoraRtcEngine.setClientRole(role);
+    await AgoraRtcEngine.setClientRole(widget.role);
   }
 
   /// Add agora event handlers
@@ -126,7 +128,7 @@ class _CallPageState extends State<CallPage> {
   /// Helper function to get list of native views
   List<Widget> _getRenderViews() {
     final List<AgoraRenderWidget> list = [];
-    if (role == ClientRole.Broadcaster) {
+    if (widget.role == ClientRole.Broadcaster) {
       list.add(AgoraRenderWidget(0, local: true, preview: true));
     }
     _users.forEach((int uid) => list.add(AgoraRenderWidget(uid)));
@@ -188,7 +190,7 @@ class _CallPageState extends State<CallPage> {
 
   /// Toolbar layout
   Widget _toolbar() {
-    if (role == ClientRole.Audience) return Container();
+    if (widget.role == ClientRole.Audience) return Container();
     return Container(
       alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.symmetric(vertical: 48),
